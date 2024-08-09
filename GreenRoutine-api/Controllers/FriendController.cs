@@ -275,7 +275,7 @@ namespace TodoApi.Controllers
                     PersonalChallengeName = cr.PersonalChallenge != null ? cr.PersonalChallenge.Name : null,
                     PersonalChallengeDescription = cr.PersonalChallenge != null ? cr.PersonalChallenge.Description : null,
                     PersonalChallengeTimeSpan = cr.PersonalChallenge != null ? cr.PersonalChallenge.Length : null,
-                    PersonalChallengeCategory = cr.PersonalChallenge != null ? cr.PersonalChallenge.Categories : null,
+                    PersonalChallengeCategory = cr.PersonalChallenge != null ? cr.PersonalChallenge.Category : null,
                     PersonalChallengeDifficulty = cr.PersonalChallenge != null ? cr.PersonalChallenge.Difficulty : (int?)null,
                     cr.GlobalChallengeId,
                     GlobalChallengeDescription = cr.GlobalChallenge != null ? cr.GlobalChallenge.Description : null,
