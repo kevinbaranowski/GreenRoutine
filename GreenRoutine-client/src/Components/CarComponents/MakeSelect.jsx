@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import fetchCarMakeInfo from './Fetch.jsx';
+import { Button } from 'reactstrap';
 
-const MakeSelect = ({ user, userId, makeChoice, setMakeChoice }) => {
+const MakeSelect = ({ user, userId }) => {
     const [makes, setMakes] = useState([]);
+    const [makeChoice, setMakeChoice] = useState("");
     const [error, setError] = useState('');
 
     const fetchCarMakeInfo = async () => {
@@ -20,6 +21,7 @@ const MakeSelect = ({ user, userId, makeChoice, setMakeChoice }) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         if (name === 'makeChoice') setMakeChoice(value);
+        console.log(makeChoice)
     }
 
     const handleSubmit = async (e) => {
@@ -42,17 +44,36 @@ const MakeSelect = ({ user, userId, makeChoice, setMakeChoice }) => {
             } else {
                 setError("Unable to add car make selection")
             }
-        }
-    
+    }
+
+    let makeName = "";
+
     useEffect(() => {
-        fetchCarMakeInfo()
+        if (makes.length === 0) {
+            fetchCarMakeInfo();
+            if (user.makeChoice !== "00000000-0000-0000-0000-000000000000" && makes.length > 0) {
+                const make = makes.filter(make => make.data.id === user.makeChoice);
+                if (make) {
+                    makeName = make.data.attributes.name;
+                    console.log("make: " + makeName)
+                }
+            }
+        }
     }, [])
 
 
     return (
         <>
+            { makeName && 
+                <>
+                    <h4>Car Info</h4>
+                    <p>Make: {makeName}</p>
+                    <p>Model: </p>
+                </>
+            }
             <h4>Please select your vehicle make:</h4>
-            <form>
+            { makes.length > 0 ? 
+                <form>
                 <select onChange={handleChange} name='makeChoice'>
                     {makes.map(make => (
                         <option key={make.data.id} value={make.data.id} >
@@ -60,9 +81,11 @@ const MakeSelect = ({ user, userId, makeChoice, setMakeChoice }) => {
                         </option>
                     ))}
                 </select>
-                <button onClick={handleSubmit}>Click</button>
-            </form>
-            {/* {models && } */}
+                <Button color="primary" onClick={handleSubmit}>Click</Button>
+                </form> :
+                <p>Loading makes...</p>
+            }
+            
         </>
     );
 };

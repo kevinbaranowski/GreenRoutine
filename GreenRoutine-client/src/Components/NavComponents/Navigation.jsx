@@ -183,18 +183,6 @@ import {
                             <Link to='/' className="nav-link white-text">Home</Link>
                         </NavItem>
                         <NavItem>
-                            <Link to='/about' className="nav-link white-text">Calendar</Link>
-                        </NavItem>
-                        <NavItem>
-                            <Link to='/carprofile' className="nav-link white-text">Car Profile</Link>
-                        </NavItem>
-                        <NavItem>
-                            <Link to='/challenge' className="nav-link white-text">Challenges</Link>
-                        </NavItem>
-                        <NavItem>
-                            <Link to='/create' className="nav-link white-text">Create Challenge</Link>
-                        </NavItem>
-                        <NavItem>
                             <Link to='/leaderboard' className="nav-link white-text">Leaderboard</Link>
                         </NavItem>
                     </Nav>
