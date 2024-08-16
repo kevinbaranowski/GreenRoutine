@@ -44,6 +44,8 @@ namespace TodoApi.Controllers
                 Leaves = 0,
                 Bio = "",
                 Pronouns = "",
+                MakeName = "",
+                ModelName = "",
                 LifetimeLeaves = 0,
                 CurrentStreak = 0,
                 LongestStreak = 0,
@@ -276,9 +278,9 @@ namespace TodoApi.Controllers
                 }
 
                 user.makeChoice = addMakeRequest.makeChoice;
+                user.MakeName = addMakeRequest.MakeName;
                 await _signInManager.RefreshSignInAsync(user);
                 var result = await _userManager.UpdateAsync(user);
-                // _makeChoice = addMakeRequest.makeChoice;
                 if (result.Succeeded)
                 {
                     Console.WriteLine("good");
@@ -296,23 +298,9 @@ namespace TodoApi.Controllers
             }
         }
 
-        /*public IActionResult RecordMake( /*[FromBody]*//*
-            AddMakeRequest addMakeRequest
-        )
-        {
-            Console.WriteLine(addMakeRequest.makeChoice.ToString());
-            Console.WriteLine(addMakeRequest.makeChoice);
-            _makeChoice = addMakeRequest.makeChoice;
-
-            // context.Challenges.Add(challenge);
-            // context.SaveChanges();
-            return Ok(new { message = "Make successfully registered" });
-        }*/
-
         [HttpGet("about2/{id}")]
         public async Task<ActionResult<VehicleModels>> GetModels(Guid id)
         {
-            // var user = await _userManager.FindByIdAsync(userId);
             using (var httpClient = new HttpClient())
             {
             string apiUrl = "https://www.carboninterface.com/api/v1/vehicle_makes/" + id.ToString() + "/vehicle_models";
@@ -361,9 +349,9 @@ namespace TodoApi.Controllers
                 }
 
                 user.modelChoice = addModelRequest.modelChoice;
+                user.ModelName = addModelRequest.ModelName;
                 await _signInManager.RefreshSignInAsync(user);
                 var result = await _userManager.UpdateAsync(user);
-                // _makeChoice = addMakeRequest.makeChoice;
                 if (result.Succeeded)
                 {
                     return Ok(user);
@@ -372,23 +360,11 @@ namespace TodoApi.Controllers
                 {
                     return BadRequest(result.Errors);
                 }
-        // Console.WriteLine("hi");
             }
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
         }
-
-        /*[HttpGet("dates")]
-            public async Task<ActionResult<IEnumerable<string>>> GetMarkedDates()
-                {
-                    var markedDates = await _userManager.DateJoined
-                                                    .Select(md => md.Date.ToString("yyyy-MM-dd"))
-                                                    .ToListAsync();
-
-                    return Ok(markedDates);
-                }*/   
-
     }
 }

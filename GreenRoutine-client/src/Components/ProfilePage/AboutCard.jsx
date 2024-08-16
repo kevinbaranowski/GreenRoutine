@@ -28,6 +28,8 @@ const AboutCard = ({ user, setUserInfo, userId, fetchUserInfo }) => {
                     <li>Bio: {user.bio ? user.bio : "No bio available"}</li>
                     <li>Country: {user.country ? user.country : "No country available"} </li>
                     <li>Date Joined: {user.dateJoined}</li>
+                    <li>Car Make: {user.makeName ? user.makeName : "No car make available"}</li>
+                    <li>Car Model: {user.modelName ? user.modelName : "No car model available"}</li>
                 </ul>
             </CardBody>
         </Card>

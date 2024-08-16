@@ -12,8 +12,9 @@ namespace TodoApi.Server.Data
         public int Leaves { get; set; } = 0;
 
         public Guid makeChoice { get; set; }
+        public string MakeName { get; set; } = "";
         public Guid modelChoice { get; set; }
-
+        public string ModelName { get; set; } = "";
         public int LifetimeLeaves { get; set; } = 0;
         public int CurrentStreak { get; set; } = 0;
         public int LongestStreak { get; set; } = 0;

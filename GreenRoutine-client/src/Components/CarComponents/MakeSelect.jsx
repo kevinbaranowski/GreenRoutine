@@ -4,6 +4,7 @@ import { Button } from 'reactstrap';
 const MakeSelect = ({ user, userId }) => {
     const [makes, setMakes] = useState([]);
     const [makeChoice, setMakeChoice] = useState("");
+    const [makeName, setMakeName] = useState("");
     const [error, setError] = useState('');
 
     const fetchCarMakeInfo = async () => {
@@ -20,8 +21,12 @@ const MakeSelect = ({ user, userId }) => {
     }
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (name === 'makeChoice') setMakeChoice(value);
-        console.log(makeChoice)
+        if (name === 'makeChoice') {
+            setMakeChoice(value);
+            const selectedMake = makes.find(make => make.data.id === value)
+            setMakeName(selectedMake.data.attributes.name)
+        }
+        console.log(makeName + ": " + makeChoice)
     }
 
     const handleSubmit = async (e) => {
@@ -29,7 +34,8 @@ const MakeSelect = ({ user, userId }) => {
             setError('');
             const payload = {
                 Id: userId,
-                makeChoice: makeChoice
+                makeChoice: makeChoice,
+                makeName: makeName
             }
             const response = await fetch('/api/account/about', {
                 method: "POST",
@@ -46,31 +52,15 @@ const MakeSelect = ({ user, userId }) => {
             }
     }
 
-    let makeName = "";
+   // let makeName = "";
 
     useEffect(() => {
-        if (makes.length === 0) {
-            fetchCarMakeInfo();
-            if (user.makeChoice !== "00000000-0000-0000-0000-000000000000" && makes.length > 0) {
-                const make = makes.filter(make => make.data.id === user.makeChoice);
-                if (make) {
-                    makeName = make.data.attributes.name;
-                    console.log("make: " + makeName)
-                }
-            }
-        }
+        fetchCarMakeInfo();
     }, [])
 
 
     return (
         <>
-            { makeName && 
-                <>
-                    <h4>Car Info</h4>
-                    <p>Make: {makeName}</p>
-                    <p>Model: </p>
-                </>
-            }
             <h4>Please select your vehicle make:</h4>
             { makes.length > 0 ? 
                 <form>
