@@ -22,13 +22,8 @@ public class TestController : ControllerBase
         context = dbContext;
     }
 
-    /*public TestController(HttpClient httpClient)
-    {
-        _httpClient = httpClient;
-    }*/
-
     //Get /api/test for models
-    [HttpGet("about2")]
+    [HttpGet("GetModels")]
     public async Task<ActionResult<VehicleModels>> GetModels()
     {
         using (var httpClient = new HttpClient())
@@ -64,7 +59,7 @@ public class TestController : ControllerBase
     }
 
     //Get /api/test for makes
-    [HttpGet("about")]
+    [HttpGet("GetMakes")]
     public async Task<ActionResult<VehicleMakes>> GetMakes()
     {
         using (var httpClient = new HttpClient())
@@ -99,24 +94,9 @@ public class TestController : ControllerBase
         }
         }
     }
-
-    /*[HttpPost("about")]
-    public IActionResult RecordMake(/*[FromBody]*//* AddMakeRequest addMakeRequest)
-    {
-        Console.WriteLine(addMakeRequest.makeChoice.ToString());
-        Console.WriteLine(addMakeRequest.makeChoice);
-        _makeChoice = addMakeRequest.makeChoice;
-
-        // context.Challenges.Add(challenge);
-        // context.SaveChanges();
-        return Ok(new {message="Make successfully registered"});
-    }*/
-
-
         public class AddMakeRequest
         {
             public Guid makeChoice { get; set; }
-            // public int Points { get; set;}
         }
 
     [HttpPost("electricity")]
@@ -154,68 +134,15 @@ public class TestController : ControllerBase
                     var data = JsonConvert.DeserializeObject<ElectricityModel>(responseBody);
 
                     Console.WriteLine(data);
-                    // Console.WriteLine(data.ToString());
                     Console.WriteLine(data.Data.Id);
                     return Ok(data);
-                    // Console.WriteLine("Response: " + responseBody);
-                } /*
-                else
-                {
-                    return StatusCode(
-                        (int)response.StatusCode,
-                        "Error fetching data from external API"
-                    );
-                    // return "error";
-                    // Console.WriteLine("Error: " + response.StatusCode);
-                }*/
+                }
             }
             catch (HttpRequestException e)
             {
                 return StatusCode(500, $"Internal server error: {e.Message}");
-                // return StatusCode(
-                // (int)response.StatusCode,
-                // "Error fetching data from external API");
-                // Console.WriteLine("HTTP Request Exception: " + e.Message);
             }
         }
         return StatusCode(500, $"Internal server error: ");
     }
-
-    /*
-    try
-    {
-        HttpResponseMessage response = await _httpClient.PostAsync(url);
-
-        if (response.IsSuccessStatusCode)
-        {
-            string json = await response.Content.ReadAsStringAsync();
-            ComicModel data = JsonConvert.DeserializeObject<ComicModel>(json);
-            return Ok(data);
-        }
-        else
-        {
-            return StatusCode(
-                (int)response.StatusCode,
-                "Error fetching data from external API"
-            );
-        }
-    }
-    catch (Exception ex)
-    {
-        return StatusCode(500, $"Internal server error: {ex.Message}");
-    }
-}*/
-
-    // //GET /api/test/{id}
-    // [HttpGet("{id}")]
-    // [ProducesResponseType<string>(StatusCodes.Status200OK)]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // public IResult Get(int id)
-    // {
-    //     if (id < 0 || id >= _quotes.Length)
-    //     {
-    //         return Results.NotFound("These are not the droids you are looking for.");
-    //     }
-    //     return Results.Ok(_quotes[id]);
-    // }
 }

@@ -265,7 +265,7 @@ namespace TodoApi.Controllers
 
 
         //Car items
-        [HttpPost("about")]
+        [HttpPost("AddMake")]
         public async Task<IActionResult> AddMake([FromBody] AddMakeRequest addMakeRequest)
         {
             try
@@ -283,12 +283,10 @@ namespace TodoApi.Controllers
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-                    Console.WriteLine("good");
                     return Ok(user);
                 }
                 else
                 {
-                    Console.WriteLine("bad");
                     return BadRequest(result.Errors);
                 }
             }
@@ -298,7 +296,7 @@ namespace TodoApi.Controllers
             }
         }
 
-        [HttpGet("about2/{id}")]
+        [HttpGet("GetModels/{id}")]
         public async Task<ActionResult<VehicleModels>> GetModels(Guid id)
         {
             using (var httpClient = new HttpClient())
@@ -335,13 +333,12 @@ namespace TodoApi.Controllers
             }
         }
 
-        [HttpPost("about2")]
+        [HttpPost("AddModel")]
         public async Task<IActionResult> AddModel([FromBody] AddModelRequest addModelRequest)
         {
             try
             {
                 Console.WriteLine($"Received request to add car model to user: {addModelRequest.Id}");
-                Console.WriteLine("here");
                 var user = await _userManager.FindByIdAsync(addModelRequest.Id);
                 if (user == null)
                 {

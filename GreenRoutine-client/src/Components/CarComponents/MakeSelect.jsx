@@ -8,7 +8,7 @@ const MakeSelect = ({ user, userId }) => {
     const [error, setError] = useState('');
 
     const fetchCarMakeInfo = async () => {
-        const response = await fetch('api/test/about', {
+        const response = await fetch('api/test/GetMakes', {
             method: "GET"
         });
         if (response.ok) {
@@ -37,7 +37,7 @@ const MakeSelect = ({ user, userId }) => {
                 makeChoice: makeChoice,
                 makeName: makeName
             }
-            const response = await fetch('/api/account/about', {
+            const response = await fetch('/api/account/AddMake', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -51,8 +51,6 @@ const MakeSelect = ({ user, userId }) => {
                 setError("Unable to add car make selection")
             }
     }
-
-   // let makeName = "";
 
     useEffect(() => {
         fetchCarMakeInfo();
