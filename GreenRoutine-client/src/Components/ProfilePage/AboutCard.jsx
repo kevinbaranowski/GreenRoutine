@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Button, Card, CardBody, CardTitle } from "reactstrap";
+import { Button, Card, CardBody, CardTitle, Row, Col } from "reactstrap";
 import editIcon from '../../assets/images/edit_icon.png'
 import EditAboutModal from "./EditAboutModal";
+import CarInfo from './CarInfo';
 
 const AboutCard = ({ user, setUserInfo, userId, fetchUserInfo }) => {
     const [displayModal, setDisplayModal] = useState(false);
@@ -28,9 +29,8 @@ const AboutCard = ({ user, setUserInfo, userId, fetchUserInfo }) => {
                     <li>Bio: {user.bio ? user.bio : "No bio available"}</li>
                     <li>Country: {user.country ? user.country : "No country available"} </li>
                     <li>Date Joined: {user.dateJoined}</li>
-                    <li>Car Make: {user.makeName ? user.makeName : "No car make available"}</li>
-                    <li>Car Model: {user.modelName ? user.modelName : "No car model available"}</li>
                 </ul>
+                <CarInfo user={user}/>
             </CardBody>
         </Card>
     );

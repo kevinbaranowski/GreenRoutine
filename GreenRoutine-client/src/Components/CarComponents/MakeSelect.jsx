@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'reactstrap';
+import ModelSelect from './ModelSelect';
 
-const MakeSelect = ({ user, userId }) => {
+const MakeSelect = ({ userId }) => {
     const [makes, setMakes] = useState([]);
     const [makeChoice, setMakeChoice] = useState("");
     const [makeName, setMakeName] = useState("");
+    const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState('');
 
     const fetchCarMakeInfo = async () => {
@@ -26,8 +28,11 @@ const MakeSelect = ({ user, userId }) => {
             const selectedMake = makes.find(make => make.data.id === value)
             setMakeName(selectedMake.data.attributes.name)
         }
-        console.log(makeName + ": " + makeChoice)
     }
+
+    useEffect(() => {
+        console.log(makeName + ": " + makeChoice)
+    }, [makeName, makeChoice])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -45,7 +50,7 @@ const MakeSelect = ({ user, userId }) => {
                 body: JSON.stringify(payload)
             })
             if (response.ok) {
-                const data = await response.json();
+                setSubmitted(true);
                 setError("Car make selection added successfully")
             } else {
                 setError("Unable to add car make selection")
@@ -56,24 +61,28 @@ const MakeSelect = ({ user, userId }) => {
         fetchCarMakeInfo();
     }, [])
 
-
     return (
         <>
             <h4>Please select your vehicle make:</h4>
             { makes.length > 0 ? 
                 <form>
                 <select onChange={handleChange} name='makeChoice'>
+                    <option value="" disabled selected>Select a make</option>
                     {makes.map(make => (
                         <option key={make.data.id} value={make.data.id} >
                             {make.data.attributes.name}
                         </option>
                     ))}
                 </select>
-                <Button color="primary" onClick={handleSubmit}>Click</Button>
+                { !submitted && 
+                    <Button color="primary" onClick={handleSubmit}>Select</Button>
+                }
                 </form> :
                 <p>Loading makes...</p>
             }
-            
+            { submitted &&
+                <ModelSelect makeChoice={makeChoice} userId={userId} submitted={submitted}/>
+            }
         </>
     );
 };

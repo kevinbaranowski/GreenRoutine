@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 const CarProfile = () => {
     const [userInfo, setUserInfo] = useState({});
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [ready, setReady] = useState(false);
     const [error, setError] = useState('');
 
     const fetchUserInfo = async () => {
@@ -53,7 +52,6 @@ const CarProfile = () => {
     return (
         <>
             <MakeSelect user={userInfo} userId={userInfo.id} />
-            <ModelSelect user={userInfo} userId={userInfo.id} ready={ready} setReady={setReady} />
         </>
 
     );

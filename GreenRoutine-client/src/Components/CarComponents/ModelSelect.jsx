@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'reactstrap';
+import { Alert, Button } from 'reactstrap';
 
-const ModelSelect = ( user, ready) => {
+const ModelSelect = ( {userId, makeChoice, submitted} ) => {
     const [models, setModels] = useState([]);
     const [modelChoice, setModelChoice] = useState([]);
     const [modelName, setModelName] = useState("");
     const [error, setError] = useState('');
 
     const fetchCarModelInfo = async () => {
-        const response = await fetch(`/api/account/GetModels/${user.makeChoice}`, {
+        const response = await fetch(`/api/account/GetModels/${makeChoice}`, {
             method: "GET"
         });
         if (response.ok) {
             const data = await response.json();
             setModels(data);
-            setError('Car make info set.')
+            setError('')
         } else {
-            setError('Could not set car make info')
+            setError(response.errors)
         }
     }
 
@@ -24,8 +24,8 @@ const ModelSelect = ( user, ready) => {
         const { name, value } = e.target;
         if (name === 'modelChoice') {
             setModelChoice(value);
-            const selectedModel = models.find(model => model.data.attributes.id === value);
-            setModelName(selectedModel);
+            const selectedModel = models.find(model => model.data.id === value);
+            setModelName(selectedModel.data.attributes.name);
         }
     }
 
@@ -33,7 +33,7 @@ const ModelSelect = ( user, ready) => {
         e.preventDefault();
             setError('');
             const payload = {
-                Id: user.userId,
+                Id: userId,
                 modelChoice: modelChoice,
                 modelName: modelName
             }
@@ -45,36 +45,41 @@ const ModelSelect = ( user, ready) => {
                 body: JSON.stringify(payload)
             })
             if (response.ok) {
-                const data = await response.json();
-                setError("Car model added successfully")
+                setError("")
             } else {
-                setError("Unable to add car model")
+                setError(response.errors)
             }
         }
     
     useEffect(() => {
-        fetchCarModelInfo()
-    }, [user.makeChoice])
+        if (makeChoice) {
+            fetchCarModelInfo();
+        } 
+    }, [makeChoice])
 
     useEffect(() => {
-        console.log(models.length)
+        console.log(models)
     }, [models])
 
     return (
         <>
-            { models.length > 0 && 
-                <form style={ready ? { opacity: 1 } : { opacity: 1 }}>
-                    <h4>Please select your vehicle model:</h4>
-                        <select onChange={handleChange} name='modelChoice'>
-                            {models.map(model => (
-                                <option key={model.data.id} value={model.data.id} >
-                                    {model.data.attributes.name} {model.data.attributes.year}
-                                </option>
-                            ))}
-                        </select>
-                    <Button color="primary" disabled={models.length === 0} onClick={handleSubmitCarModel}>Click</Button>
-                </form>
+            { submitted ?
+                (models.length > 0 ? 
+                    <form style={{ opacity: 1 }}>
+                        <h4>Please select your vehicle model:</h4>
+                            <select onChange={handleChange} name='modelChoice'>
+                                <option value="" disabled selected>Select a model</option>
+                                {models.map(model => (
+                                    <option key={model.data.id} value={model.data.id} >
+                                        {model.data.attributes.name} {model.data.attributes.year}
+                                    </option>
+                                ))}
+                            </select>
+                        <Button color="primary" disabled={models.length === 0} onClick={handleSubmitCarModel}>Select</Button>
+                    </form> :
+                <p>Loading models...</p>) : <></>  
             }
+            { error && <Alert color='danger'>{error}</Alert> }    
         </>
     );
 };
