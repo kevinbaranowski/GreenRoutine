@@ -21,12 +21,33 @@ const MakeSelect = ({ userId }) => {
             setError('Could not set car make options')
         }
     }
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         const { name, value } = e.target;
         if (name === 'makeChoice') {
             setMakeChoice(value);
             const selectedMake = makes.find(make => make.data.id === value)
             setMakeName(selectedMake.data.attributes.name)
+            setSubmitted(true);
+            // e.preventDefault();
+            // setError('');
+            // const payload = {
+            //     Id: userId,
+            //     makeChoice: value,
+            //     makeName: selectedMake.data.attributes.name
+            // }
+            // const response = await fetch('/api/account/AddMake', {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     },
+            //     body: JSON.stringify(payload)
+            // })
+            // if (response.ok) {
+            //     setSubmitted(true);
+            //     setError("Car make selection added successfully")
+            // } else {
+            //     setError("Unable to add car make selection")
+            // }
         }
     }
 
@@ -35,26 +56,26 @@ const MakeSelect = ({ userId }) => {
     }, [makeName, makeChoice])
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-            setError('');
-            const payload = {
-                Id: userId,
-                makeChoice: makeChoice,
-                makeName: makeName
-            }
-            const response = await fetch('/api/account/AddMake', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
-            })
-            if (response.ok) {
-                setSubmitted(true);
-                setError("Car make selection added successfully")
-            } else {
-                setError("Unable to add car make selection")
-            }
+        // e.preventDefault();
+        //     setError('');
+        //     const payload = {
+        //         Id: userId,
+        //         makeChoice: makeChoice,
+        //         makeName: makeName
+        //     }
+        //     const response = await fetch('/api/account/AddMake', {
+        //         method: "POST",
+        //         headers: {
+        //             "Content-Type": "application/json"
+        //         },
+        //         body: JSON.stringify(payload)
+        //     })
+        //     if (response.ok) {
+        //         setSubmitted(true);
+        //         setError("Car make selection added successfully")
+        //     } else {
+        //         setError("Unable to add car make selection")
+        //     }
     }
 
     useEffect(() => {
@@ -66,7 +87,7 @@ const MakeSelect = ({ userId }) => {
             <h4>Please select your vehicle make:</h4>
             { makes.length > 0 ? 
                 <form>
-                <select onChange={handleChange} name='makeChoice'>
+                <select className="mb-3"onChange={handleChange} name='makeChoice'>
                     <option value="" disabled selected>Select a make</option>
                     {makes.map(make => (
                         <option key={make.data.id} value={make.data.id} >
@@ -74,14 +95,14 @@ const MakeSelect = ({ userId }) => {
                         </option>
                     ))}
                 </select>
-                { !submitted && 
-                    <Button color="primary" onClick={handleSubmit}>Select</Button>
-                }
+                {/* { !submitted && 
+                    <Button style={{marginLeft: "1rem"}}color="primary" onClick={handleSubmit}>Select</Button>
+                } */}
                 </form> :
                 <p>Loading makes...</p>
             }
             { submitted &&
-                <ModelSelect makeChoice={makeChoice} userId={userId} submitted={submitted}/>
+                <ModelSelect makeChoice={makeChoice} makeName={makeName} userId={userId} submitted={submitted}/>
             }
         </>
     );

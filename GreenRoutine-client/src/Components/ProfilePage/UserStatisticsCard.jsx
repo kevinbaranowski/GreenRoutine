@@ -1,6 +1,6 @@
 import { Card, CardBody, CardTitle } from "reactstrap";
 import leafIcon from '../../assets/images/leaf.png'
-import formatNumbers from "../../helpers/formatNumbers";
+import formatNumbers from "../../utils/helpers/formatNumbers";
 
 const UserStatisticsCard = ({ user }) => {
 

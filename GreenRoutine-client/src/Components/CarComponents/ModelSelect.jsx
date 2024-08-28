@@ -75,7 +75,7 @@ const ModelSelect = ( {userId, makeChoice, submitted} ) => {
                                     </option>
                                 ))}
                             </select>
-                        <Button color="primary" disabled={models.length === 0} onClick={handleSubmitCarModel}>Select</Button>
+                        {/* <Button style={{marginLeft: "1rem"}}color="primary" disabled={models.length === 0} onClick={handleSubmitCarModel}>Select</Button> */}
                     </form> :
                 <p>Loading models...</p>) : <></>  
             }

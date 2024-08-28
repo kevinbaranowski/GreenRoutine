@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Row, Col, Button } from 'reactstrap';
+import EditCarInfoModal from './EditCarInfoModal';
 
 const CarInfo = ({ user }) => {
     const [displayModal, setDisplayModal] = useState(false);
@@ -23,6 +24,7 @@ const CarInfo = ({ user }) => {
                 </Col>
                 <Col style={{ textAlign: 'right'}}>
                     <Button color='success' onClick={toggle}>Edit Car Info</Button>
+                    <EditCarInfoModal isOpen={displayModal} toggle={toggle}/>
                 </Col>
             </Row>
         </div>

@@ -4,7 +4,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { Button, Card, Row, Col } from 'reactstrap';
 import { useEffect, useState } from 'react';
 import CircularImage from '../styling/CircularImage';
-import formatNumbers from '../../helpers/formatNumbers';
+import formatNumbers from '../../utils/helpers/formatNumbers';
 import LeavesCount from '../NavComponents/LeavesCount';
 import AddFriendModal from './AddFriendModal';
 import RemoveFriendButton from '../FriendProfilePage/RemoveFriendButton';
