@@ -120,9 +120,6 @@ import {
                         <Link to='/about' className="nav-link white-text">Calendar</Link>
                     </NavItem>
                     <NavItem>
-                        <Link to='/carprofile' className="nav-link white-text">Car Profile</Link>
-                    </NavItem>
-                    <NavItem>
                         <UncontrolledDropdown>
                             <DropdownToggle nav caret className="white-text">
                                 Challenges

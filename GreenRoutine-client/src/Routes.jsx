@@ -15,7 +15,6 @@ import RegisterForm from './Components/LoginRegister/RegisterForm.jsx'
 import LoginForm from './Components/LoginRegister/LoginForm.jsx'
 import Leaderboard from './Components/Leaderboard/Leaderboard.jsx'
 import FriendProfile from './Components/FriendProfilePage/FriendProfile.jsx'
-import CarProfile from './Components/CarComponents/CarProfile.jsx'
 import ThankYou from './Components/Challenge/ThankYou.jsx'
 import ElectricityEstimate from'./Components/ElectricityComponents/Electricity.jsx'
 import Unauthorized from './Components/AuthorizationPages/Unauthorized.jsx'
@@ -81,10 +80,6 @@ const router = createBrowserRouter([
       {
         path: '/friend-profile/:id',
         element: <FriendProfile/>
-      },
-      {
-        path: '/carprofile',
-        element: <CarProfile/>
       },
       {
         path: '/thankyou',

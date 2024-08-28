@@ -1,8 +1,7 @@
 import MakeSelect from './MakeSelect.jsx'
-import ModelSelect from './ModelSelect.jsx'
 import { useState, useEffect } from 'react';
 
-const CarProfile = () => {
+const CarProfile = ({ toggle, setCarMake, setCarModel }) => {
     const [userInfo, setUserInfo] = useState({});
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [error, setError] = useState('');
@@ -51,9 +50,8 @@ const CarProfile = () => {
 
     return (
         <>
-            <MakeSelect user={userInfo} userId={userInfo.id} />
+            <MakeSelect userId={userInfo.id} toggle={toggle} setCarMake={setCarMake} setCarModel={setCarModel}/>
         </>
-
     );
 };
 
