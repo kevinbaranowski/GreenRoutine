@@ -51,7 +51,7 @@ To run the app locally:
   <li>Backend Setup:
     <ul>
       <li>Set up your SQL Server database.</li>
-      <li>Configure <i>appsettings.json</i> with your connection string.</li>
+      <li>Configure <i>Program.cs</i> with your connection string.</li>
       <li>Run migrations: <i>dotnet ef database update</i></li>
       <li>Start the API: <i>dotnet run</i></li>
     </ul>
