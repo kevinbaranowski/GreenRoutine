@@ -1,4 +1,4 @@
-<h4>🌱 GreenRoutine</h4>
+<h1>🌱 GreenRoutine</h1>
 
 GreenRoutine is a full-stack web application built as a capstone project for the LaunchCode Web Development Program. The app empowers users to reduce their environmental impact through daily habit-based challenges and community interaction.
 
@@ -42,9 +42,11 @@ To run the app locally:
   <li>Clone the repository</li>
   <li>
     Frontend Setup:
-      cd client
-      npm install
-      npm start
+      <ul>
+        <li><i>cd client</i></li>
+        <li><i>npm install</i></li>
+        <li><i>npm start</i></li>
+      </ul>
   </li>
   <li>Backend Setup:
     <ul>
